@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="站长,网页特效,js特效,广告代码,zzjs,zzjs.net,sky,www.zzjs.net,站长特效 网" />
+<meta name="description" content="www.zzjs.net,站长特效网，站长必备js特效及广告代码。大量高质量js特效，提供高质量广告代码下载,尽在站长特效网" />
+<title>可左右拖动的导航菜单，sky整理收集。</title>
+<style>
+ul{margin:0;padding:0;list-style:none;width:100000px}
+li{margin:0;padding:0;width:100px;height:100px;display:block;float:left;margin-right:5px;background:#009900}
+#img_bag{width:640px;height:100px;background:#FF9900;margin:0 auto;}
+#img_bag a{float:left;width:20px;display:block;height:20px;font-weight:bold;}
+#img_bag #img{width:600px;height:100px;background:#ccc;overflow:hidden;float:left}
+#scrollBar{width:600px;height:20px;background:#FF0000;margin:0 auto;position:relative}
+#scroll{width:30px;height:20px;background:#000;cursor:pointer;position:absolute;}
+</style>
+</head>
+<body>
+<div id="img_bag">
+<a href="javascript:void(0)" onmousedown="moveLeft()"><<</a>
+<div id="img">
+<ul>
+<li>站长特效网</li>
+<li>zzjs.net</li>
+<li>百度</li>
+<li>谷歌</li>
+<li>阿里西西</li>
+<li>蓝色理想</li>
+<li>中国站长站</li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+</ul>
+</div>
+<a href="javascript:void(0)" onmousedown="moveRight()">>></a>
+</div>
+<div style="clear:both;"></div>
+<div id="scrollBar">
+<div id="scroll" style="left:0"></div>
+</div>
+<script>
+function $(obj){return document.getElementById(obj)}
+var maxWidth=$("img").getElementsByTagName("ul")[0].getElementsByTagName("li").length*105;
+console.log($("img").getElementsByTagName("ul")[0].getElementsByTagName("li").length);
+var isScroll=false;
+var modiLeft;
+var targetx = 103;//一次滚动距离
+var dx;
+var a=null;
+function moveLeft(){
+var le=parseInt($("img").scrollLeft)
+console.log(le);
+if(le>100){
+targetx=parseInt($("img").scrollLeft)-103;
+}//欢迎来到站长特效网，我们的网址是www.zzjs.net，很好记，zz站长，js就是js特效，本站收集大量高质量js代码，还有许多广告代码下载。
+else{targetx=parseInt($("img").scrollLeft)-le-1}
+scLeft();
+}//欢迎来到站长特效网，我们的网址是www.zzjs.net，很好记，zz站长，js就是js特效，本站收集大量高质量js代码，还有许多广告代码下载。
+function scLeft(){
+dx=parseInt($("img").scrollLeft)-targetx;
+$("img").scrollLeft-=dx*.3;
+clearScroll=setTimeout(scLeft,50);
+if(dx*.3<1){clearTimeout(clearScroll)}
+}
+function moveRight(){
+var le=parseInt($("img").scrollLeft)+103;
+var maxL=maxWidth-600;
+if(le<maxL){
+targetx=parseInt($("img").scrollLeft)+103;
+}
+else{targetx=maxL}
+scRight();
+}
+function scRight(){
+dx=targetx-parseInt($("img").scrollLeft);
+$("img").scrollLeft+=dx*.3;
+
+a=setTimeout(scRight,50);
+if(dx*.3<1){clearTimeout(a)}
+}
+</script>
+</body>
+</html>

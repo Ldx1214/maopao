@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="./js/jquery.min.js"></script>
+	<style>
+		#maps{
+			height: 600px;
+		}
+		.daoh{
+			border: 1px solid #ccc;
+			position: absolute;
+			left: 0;
+			top:250px;
+			z-index: 10;
+			width: 100px;
+		}
+		/*.aa{
+			position: relative;
+			width: 100px;
+		}*/
+		.bar{
+			position: relative;
+			left: 108px;
+			top: 50px;
+			height: 0px;
+			width: 0px;
+			border-top: 10px solid transparent;
+			border-left: 10px solid black;
+			border-bottom: 10px solid transparent;
+		}
+		.main{
+			position: relative;
+		}
+	</style>
+</head>
+<body>
+	<div class="main">
+		<div class="daoh">
+			<div class="bar">	
+			</div>
+			<ol class="aa">
+				<li>1</li>
+				<li>2</li>
+				<li>3</li>
+				<li>4</li>
+			</ol>
+		</div>
+		<div id="maps">
+		</div>
+	</div>
+
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=pKMkmtyS5iM6nTga1SBWWtcBIiXXVbKX"></script>
+	<script type="text/javascript">
+		$(function(){
+			var map = new BMap.Map("maps");
+			map.addControl(new BMap.NavigationControl());  
+			map.addHotspot(new BMap.NavigationControl()); 
+			map.enableScrollWheelZoom(true); 
+			var lushu;
+			var drv = new BMap.DrivingRoute('北京', {
+				onSearchComplete: function(res) {
+            		if (drv.getStatus() == BMAP_STATUS_SUCCESS) {
+	                	var plan = res.getPlan(0);
+	                	var arrPois =[];
+	            		for(var j=0;j<plan.getNumRoutes();j++){
+		               		var route = plan.getRoute(j);
+		                	arrPois= arrPois.concat(route.getPath());
+	                	}
+	                	map.addOverlay(new BMap.Polyline(arrPois, {strokeColor:"red", strokeWeight:2, strokeOpacity:0.8}));
+	                	map.setViewport(arrPois);        
+            		}
+        		}
+    		});
+			drv.search('天安门', '百度大厦');
+			$(function(){
+     
+		    $('.daoh').css('left','-109px');
+		     
+		    var expanded = true;
+		     
+		    $('.bar').click(function(){
+		        if(expanded){
+		            $('.daoh').animate({left:'0'},500);
+		            $('.bar').css('background-position','-16px 0px');
+		            $('.bar').css('left','100px');
+		        }else{
+		            $('.daoh').animate({left:'-109px'},500);
+		            $('.bar').css('background-position','-0px 0px');
+		        }
+		        expanded = !expanded;
+		    });
+ 
+});
+		})
+	</script>
+</body>
+</html>
